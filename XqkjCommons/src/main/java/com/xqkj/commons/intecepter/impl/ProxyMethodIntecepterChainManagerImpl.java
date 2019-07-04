@@ -6,6 +6,9 @@ import com.xqkj.commons.intecepter.ProxyMethodIntecepterChainManager;
 import com.xqkj.commons.intecepter.ProxyMethodWithCatchExceptionInteCeptor;
 import com.xqkj.commons.utils.Assert;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * @ Author     ：lwt-mac<br>
  * @ Date       ：2019/6/11 3:49 PM <br>
@@ -23,6 +26,8 @@ public class ProxyMethodIntecepterChainManagerImpl implements ProxyMethodIntecep
 
     private ProxyMethodIntecepterChain tail=new ProxyMethodIntecepterChainImpl();
 
+    private Map<String,Boolean> addedFlagMap=new ConcurrentHashMap<>();
+
     public ProxyMethodIntecepterChainManagerImpl(){
         header.setNextInteCepterChain(tail);
         tail.setPreInteCepterChain(header);
@@ -31,6 +36,9 @@ public class ProxyMethodIntecepterChainManagerImpl implements ProxyMethodIntecep
     @Override
     public void addFirst(ProxyMethodIntecepter proxyMethodIntecepter) {
         Assert.isNotNull(proxyMethodIntecepter,"proxyMethodIntecepter 不能为空");
+        if(testIsAdded(proxyMethodIntecepter)){
+            return;
+        }
         ProxyMethodIntecepterChain nextChain = header.getNextInteCepterChain();
         ProxyMethodIntecepterChain newChain=new ProxyMethodIntecepterChainImpl();
         newChain.setCurrentInteCepter(proxyMethodIntecepter);
@@ -39,15 +47,16 @@ public class ProxyMethodIntecepterChainManagerImpl implements ProxyMethodIntecep
         //
         nextChain.setPreInteCepterChain(newChain);
         header.setNextInteCepterChain(newChain);
-        if(proxyMethodIntecepter instanceof ProxyMethodWithCatchExceptionInteCeptor){
-            hasExceptionIntercepter=true;
-        }
-        intecepterChainLength++;
+        //
+        afterAddSuccess(proxyMethodIntecepter);
     }
 
     @Override
     public void addLast(ProxyMethodIntecepter proxyMethodIntecepter) {
         Assert.isNotNull(proxyMethodIntecepter,"proxyMethodIntecepter 不能为空");
+        if(testIsAdded(proxyMethodIntecepter)){
+            return;
+        }
         ProxyMethodIntecepterChain preChain = tail.getPreInteCepterChain();
         ProxyMethodIntecepterChain newChain=new ProxyMethodIntecepterChainImpl();
         newChain.setCurrentInteCepter(proxyMethodIntecepter);
@@ -56,15 +65,16 @@ public class ProxyMethodIntecepterChainManagerImpl implements ProxyMethodIntecep
         //
         preChain.setNextInteCepterChain(newChain);
         tail.setPreInteCepterChain(newChain);
-        if(proxyMethodIntecepter instanceof ProxyMethodWithCatchExceptionInteCeptor){
-            hasExceptionIntercepter=true;
-        }
-        intecepterChainLength++;
+        //
+        afterAddSuccess(proxyMethodIntecepter);
     }
 
     @Override
     public void addBefore(ProxyMethodIntecepter proxyMethodIntecepter, Class<? extends ProxyMethodIntecepter> beforeClassType) {
         Assert.isNotNull(proxyMethodIntecepter,"proxyMethodIntecepter 不能为空");
+        if(testIsAdded(proxyMethodIntecepter)){
+            return;
+        }
         ProxyMethodIntecepterChain currentChain=header.getNextInteCepterChain();
         ProxyMethodIntecepterChain newChain=new ProxyMethodIntecepterChainImpl();
         newChain.setCurrentInteCepter(proxyMethodIntecepter);
@@ -82,15 +92,15 @@ public class ProxyMethodIntecepterChainManagerImpl implements ProxyMethodIntecep
         if(currentChain==tail){
             addLast(proxyMethodIntecepter);
         }
-        if(proxyMethodIntecepter instanceof ProxyMethodWithCatchExceptionInteCeptor){
-            hasExceptionIntercepter=true;
-        }
-        intecepterChainLength++;
+        afterAddSuccess(proxyMethodIntecepter);
     }
 
     @Override
     public void addAfter(ProxyMethodIntecepter proxyMethodIntecepter, Class<? extends ProxyMethodIntecepter> afterClassType) {
         Assert.isNotNull(proxyMethodIntecepter,"proxyMethodIntecepter 不能为空");
+        if(testIsAdded(proxyMethodIntecepter)){
+            return;
+        }
         ProxyMethodIntecepterChain currentChain=header.getNextInteCepterChain();
         ProxyMethodIntecepterChain newChain=new ProxyMethodIntecepterChainImpl();
         newChain.setCurrentInteCepter(proxyMethodIntecepter);
@@ -108,10 +118,7 @@ public class ProxyMethodIntecepterChainManagerImpl implements ProxyMethodIntecep
         if(currentChain==tail){
             addLast(proxyMethodIntecepter);
         }
-        if(proxyMethodIntecepter instanceof ProxyMethodWithCatchExceptionInteCeptor){
-            hasExceptionIntercepter=true;
-        }
-        intecepterChainLength++;
+        afterAddSuccess(proxyMethodIntecepter);
     }
 
     @Override
@@ -134,4 +141,25 @@ public class ProxyMethodIntecepterChainManagerImpl implements ProxyMethodIntecep
         return intecepterChainLength;
 
     }
+
+    private void afterAddSuccess(ProxyMethodIntecepter proxyMethodIntecepter){
+        if(proxyMethodIntecepter instanceof ProxyMethodWithCatchExceptionInteCeptor){
+            hasExceptionIntercepter=true;
+        }
+        intecepterChainLength++;
+        //
+        markIsAdded(proxyMethodIntecepter);
+    }
+
+    private boolean testIsAdded(ProxyMethodIntecepter proxyMethodIntecepter){
+        if(addedFlagMap.get(proxyMethodIntecepter.getClass().toString())!=null){
+            return true;
+        }
+        return false;
+    }
+
+    private void markIsAdded(ProxyMethodIntecepter proxyMethodIntecepter){
+        addedFlagMap.put(proxyMethodIntecepter.getClass().toString(),true);
+    }
+
 }

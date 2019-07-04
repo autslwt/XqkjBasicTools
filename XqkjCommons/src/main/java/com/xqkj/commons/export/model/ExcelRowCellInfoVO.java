@@ -19,6 +19,8 @@ public class ExcelRowCellInfoVO {
 
     private Integer cellWidth;
 
+    private String cellCode;
+
 
     public int getCurrentCellIndex() {
         return currentCellIndex;
@@ -58,5 +60,13 @@ public class ExcelRowCellInfoVO {
 
     public void setCellWidth(Integer cellWidth) {
         this.cellWidth = cellWidth;
+    }
+
+    public String getCellCode() {
+        return cellCode;
+    }
+
+    public void setCellCode(String cellCode) {
+        this.cellCode = cellCode;
     }
 }

@@ -113,6 +113,7 @@ public class DefAnnoDataExcelFileWriter extends DefExcelFileWriter implements An
         excelRowCellInfoVO.setCellWidth(excelCellConfig.getColumWidth());
         excelRowCellInfoVO.setValueFormat(excelCellConfig.getFormat());
         excelRowCellInfoVO.setValue(excelCellConfig.getValue());
+        excelRowCellInfoVO.setCellCode(excelCellConfig.getCellCode());
         if (isHeaderData) {
             excelRowCellInfoVO.setValue(excelCellConfig.getHeader());
         }

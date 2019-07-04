@@ -55,6 +55,10 @@ public class ExcelProxFactory {
         initIntecepters();
     }
 
+    public static void loadSelf(){
+
+    }
+
     /**
      * 每添加一个默认获取方法，在这里注册一下默认的key并且运行一些，以便能够使用getRegistedObj方法获取到他们
      */

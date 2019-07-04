@@ -1,11 +1,10 @@
 package com.xqkj.commons.test.handler;
 
+import com.xqkj.commons.export.FileUpLoader;
 import com.xqkj.commons.export.PageListDateMaker;
 import com.xqkj.commons.export.handler.BasicAnnoDataExcelExportHandler;
-import com.xqkj.commons.export.model.ExcelWriteExtInfoVO;
-import com.xqkj.commons.export.model.ExportExcelRequestVO;
-import com.xqkj.commons.export.model.FileUpLoadExtInfoVO;
-import com.xqkj.commons.export.model.PageInforModel;
+import com.xqkj.commons.export.model.*;
+import com.xqkj.commons.model.HandleResult;
 import com.xqkj.commons.test.model.TestModel;
 import com.xqkj.commons.test.model.TestPageQuery;
 
@@ -72,6 +71,8 @@ public class TestModelDataExcelExportHandler extends BasicAnnoDataExcelExportHan
                 testModel.setId(currentCount);
                 testModel.setName("测试-" + currentCount);
                 testModel.setRemarks("remarker-" + currentCount);
+                testModel.setTestForCode("testForCode="+currentCount);
+                testModel.setShowForCode("showForCoe-"+currentCount);
                 modelList.add(testModel);
                 currentCount++;
                 if (currentCount > sumCount) {
@@ -94,17 +95,17 @@ public class TestModelDataExcelExportHandler extends BasicAnnoDataExcelExportHan
         return keyName;
     }
 
-//    @Override
-//    protected FileUpLoader getCoustomerFileUpLoader(){
-//        return (excelFile, showFileName, fileUpLoadExtInfoVO) -> {
-//            System.out.println("doUploadFlie uid="+fileUpLoadExtInfoVO.getUid());
-//            FileUpLoadResult fileUpLoadResult=new FileUpLoadResult();
-//            fileUpLoadExtInfoVO.setUid(fileUpLoadExtInfoVO.getUid());
-//            fileUpLoadExtInfoVO.setUploadServiceUrl("getCoustomerFileUpLoader/test.xlsx");
-//            fileUpLoadResult.setFileUrl("downloadUrl/test.xlxs");
-//            return HandleResult.success(fileUpLoadResult);
-//        };
-//    }
+    @Override
+    protected FileUpLoader getCoustomerFileUpLoader(){
+        return (excelFile, showFileName, fileUpLoadExtInfoVO) -> {
+            System.out.println("doUploadFlie uid="+fileUpLoadExtInfoVO.getUid());
+            FileUpLoadResult fileUpLoadResult=new FileUpLoadResult();
+            fileUpLoadExtInfoVO.setUid(fileUpLoadExtInfoVO.getUid());
+            fileUpLoadExtInfoVO.setUploadServiceUrl("getCoustomerFileUpLoader/test.xlsx");
+            fileUpLoadResult.setFileUrl("downloadUrl/test.xlxs");
+            return HandleResult.success(fileUpLoadResult);
+        };
+    }
 
     @Override
     protected String getFilePath(ExportExcelRequestVO requestVO){

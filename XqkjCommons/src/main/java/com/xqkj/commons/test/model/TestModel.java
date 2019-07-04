@@ -16,6 +16,11 @@ public class TestModel {
     private String name;
     @ExcelCellInforAnno(header = "备注",index = 3)
     private String remarks;
+    @ExcelCellInforAnno(cellCode = "testForCode",header = "code测试",index = 4)
+    private String testForCode;
+    @ExcelCellInforAnno(cellCode = "showForCode",header = "code测试-2",index = 5)
+    private String showForCode;
+
 
     public Integer getId() {
         return id;
@@ -45,4 +50,19 @@ public class TestModel {
         public int test;
     }
 
+    public String getTestForCode() {
+        return testForCode;
+    }
+
+    public void setTestForCode(String testForCode) {
+        this.testForCode = testForCode;
+    }
+
+    public String getShowForCode() {
+        return showForCode;
+    }
+
+    public void setShowForCode(String showForCode) {
+        this.showForCode = showForCode;
+    }
 }
