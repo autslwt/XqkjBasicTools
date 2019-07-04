@@ -30,10 +30,19 @@ public class SimpleExcelExportServiceImpl implements SimpleExcelExportService{
     
     @PostConstruct
     public void init() {
+        ExcelProxFactory.loadSelf();//最好调用一下
         SimpleExcelExportConfigVO configVO=new SimpleExcelExportConfigVO();
         configVO.setStringRedisTemplate(stringRedisTemplate);
         //使用前必须先初始化
         simpleExcelExportFacade.init(configVO);
+        //如果需要可以添加切面，对导出功能进行扩展   
+        //添加切面的方法-01--直接实现ProxyMethodIntecepter接口，然后显示添加
+        ProxyMethodIntecepterChainManagerContainer.addIntecepterToManager(
+                IntecepterManagerNames.ExcelFileWriter_WriteHeaderRowData,
+                new ExcelFileWriterWriteHeaderRowDataIntecepter()
+        );
+        //添加切面的方法-02--继承基础类BasicMethodIntecepterImpl，然后调用init方法隐式添加
+        new ExcelFileWriterWriteBodyRowDataIntecepter().init();
     }
     
     //成功时HandleResult的entity为进度对象的key值
