@@ -1,12 +1,12 @@
 package com.xqkj.commons.test.interceptor;
 
-import com.xqkj.commons.export.model.ExcelHeaderInfoVO;
+import com.xqkj.commons.constant.IntecepterManagerNames;
 import com.xqkj.commons.export.model.ExcelRowCellInfoVO;
-import com.xqkj.commons.intecepter.ProxyMethodIntecepter;
+import com.xqkj.commons.export.model.ExcelRowInfoVO;
+import com.xqkj.commons.intecepter.impl.BasicMethodIntecepterImpl;
 import com.xqkj.commons.model.InteceptReturnVO;
 import com.xqkj.commons.model.IntecepterArgsVO;
 import com.xqkj.methodargs.ExcelFileWriter_writeBodyRowDate;
-import com.xqkj.methodargs.ExcelFileWriter_writeHeaderRowData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,21 +14,26 @@ import java.util.Map;
 
 /**
  * @ Author     ：lwt-mac<br>
- * @ Date       ：2019/7/4 10:03 PM <br>
+ * @ Date       ：2019/7/4 10:00 PM <br>
  * @ Description：<br>
  * @ Modified By：<br>
  * @Version: 1.000
  */
-public class ExcelFileWriterWriteHeaderRowDataIntecepter implements ProxyMethodIntecepter{
+public class TestExcelFileWriterWriteBodyRowDataIntecepter extends BasicMethodIntecepterImpl {
+    @Override
+    public String getManagerName() {
+        return IntecepterManagerNames.ExcelFileWriter_WriteBodyRowData;
+    }
+
     @Override
     public InteceptReturnVO preHandle(IntecepterArgsVO intecepterArgs) {
         Map<String, Object> objectMap = intecepterArgs.getArgMap();
         if (objectMap != null && !objectMap.isEmpty()
-                && objectMap.get(ExcelFileWriter_writeHeaderRowData.excelHeaderInfoVO) != null) {
-            ExcelHeaderInfoVO excelHeaderInfoVO= (ExcelHeaderInfoVO)objectMap.get(ExcelFileWriter_writeHeaderRowData.excelHeaderInfoVO);
-            List<ExcelRowCellInfoVO> cellInfoVOList = excelHeaderInfoVO.getHeaderRowInfo().getCellInfoVOList();
+                && objectMap.get(ExcelFileWriter_writeBodyRowDate.excelRowInfoVO) != null) {
+            ExcelRowInfoVO excelRowInfoVO = (ExcelRowInfoVO) objectMap.get(ExcelFileWriter_writeBodyRowDate.excelRowInfoVO);
+            List<ExcelRowCellInfoVO> cellInfoVOList = excelRowInfoVO.getCellInfoVOList();
             List<ExcelRowCellInfoVO> newList = new ArrayList<>();
-            excelHeaderInfoVO.getHeaderRowInfo().setCellInfoVOList(newList);
+            excelRowInfoVO.setCellInfoVOList(newList);
             cellInfoVOList.forEach(item -> {
                 if (!"testForCode".equals(item.getCellCode())) {
                     newList.add(item);

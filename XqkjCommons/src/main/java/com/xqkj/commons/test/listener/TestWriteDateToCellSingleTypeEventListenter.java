@@ -11,9 +11,9 @@ import com.xqkj.commons.event.WriteDateToCellEvent;
  * @ Modified By：<br>
  * @Version: 1.000
  */
-public class WriteDateToCellSingleTypeEventListenter implements SingleTypeEventListenter<WriteDateToCellEvent> {
+public class TestWriteDateToCellSingleTypeEventListenter implements SingleTypeEventListenter<WriteDateToCellEvent> {
     @Override
     public void handledEvent(WriteDateToCellEvent event) {
-        System.out.println("WriteDateToCellSingleTypeEventListenter handledEvent:event="+ JSON.toJSONString(event));
+        System.out.println("TestWriteDateToCellSingleTypeEventListenter handledEvent:event="+ JSON.toJSONString(event));
     }
 }

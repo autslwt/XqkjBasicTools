@@ -29,13 +29,13 @@ import java.util.Map;
 public class TestExcelFileMaker {
 
     public static void main(String[] args) {
-//        DefWriteBodyRowDateIntecepter defWriteBodyRowDateIntecepter=new DefWriteBodyRowDateIntecepter();
-//        DefWriteBodyRowDateIntecepter1 defWriteBodyRowDateIntecepter1=new DefWriteBodyRowDateIntecepter1();
+//        TestWriteBodyRowDateIntecepter defWriteBodyRowDateIntecepter=new TestWriteBodyRowDateIntecepter();
+//        TestWriteBodyRowDateIntecepter1 defWriteBodyRowDateIntecepter1=new TestWriteBodyRowDateIntecepter1();
 //        ProxyMethodIntecepterChainManagerContainer.addIntecepterToManager(IntecepterManagerNames.ExcelFileWriter_WriteBodyRowData,
 //                defWriteBodyRowDateIntecepter);
 //        ProxyMethodIntecepterChainManagerContainer.addIntecepterToManager(IntecepterManagerNames.ExcelFileWriter_WriteBodyRowData,
 //                defWriteBodyRowDateIntecepter1);
-        //WriteDateToCellSingleTypeEventListenter writeDateToCellEventListenter=new WriteDateToCellSingleTypeEventListenter();
+        //TestWriteDateToCellSingleTypeEventListenter writeDateToCellEventListenter=new TestWriteDateToCellSingleTypeEventListenter();
         //EventManager.registEventListenter(WriteDateToCellEvent.class, writeDateToCellEventListenter);
         RunProgressMonitor runProgressMonitor = new DefExportExcelRunProgressMonitor();
         runProgressMonitor.setRunInforDao(new RunInfoDaoImpl());

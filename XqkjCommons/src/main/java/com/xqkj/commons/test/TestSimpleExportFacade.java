@@ -3,30 +3,20 @@ package com.xqkj.commons.test;
 import com.alibaba.fastjson.JSON;
 import com.xqkj.commons.constant.IntecepterManagerNames;
 import com.xqkj.commons.export.SimpleExcelExportFacade;
-import com.xqkj.commons.export.impl.DefSimpleExcelExportFacade;
 import com.xqkj.commons.export.impl.SingletonDefSimpleExcelExportFacade;
-import com.xqkj.commons.export.model.ExcelRowCellInfoVO;
-import com.xqkj.commons.export.model.ExcelRowInfoVO;
 import com.xqkj.commons.export.model.ExportExcelRequestVO;
 import com.xqkj.commons.export.model.SimpleExcelExportConfigVO;
-import com.xqkj.commons.intecepter.ProxyMethodIntecepter;
 import com.xqkj.commons.intecepter.utils.ProxyMethodIntecepterChainManagerContainer;
 import com.xqkj.commons.model.HandleResult;
-import com.xqkj.commons.model.InteceptReturnVO;
-import com.xqkj.commons.model.IntecepterArgsVO;
 import com.xqkj.commons.progress.RunInforDao;
 import com.xqkj.commons.progress.model.RunInforModel;
 import com.xqkj.commons.progress.model.RunInforQuery;
 import com.xqkj.commons.proxy.ExcelProxFactory;
 import com.xqkj.commons.test.handler.TestModelDataExcelExportHandler;
-import com.xqkj.commons.test.interceptor.ExcelFileWriterWriteBodyRowDataIntecepter;
-import com.xqkj.commons.test.interceptor.ExcelFileWriterWriteHeaderRowDataIntecepter;
-import com.xqkj.methodargs.ExcelFileWriter_writeBodyRowDate;
+import com.xqkj.commons.test.interceptor.TestExcelFileWriterWriteBodyRowDataIntecepter;
+import com.xqkj.commons.test.interceptor.TestExcelFileWriterWriteHeaderRowDataIntecepter;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * @ Author     ：lwt-mac<br>
@@ -42,10 +32,10 @@ public class TestSimpleExportFacade {
         //添加切面的方法-01--直接实现ProxyMethodIntecepter接口，然后显示添加
         ProxyMethodIntecepterChainManagerContainer.addIntecepterToManager(
                 IntecepterManagerNames.ExcelFileWriter_WriteHeaderRowData,
-                new ExcelFileWriterWriteHeaderRowDataIntecepter()
+                new TestExcelFileWriterWriteHeaderRowDataIntecepter()
         );
         //添加切面的方法-02--继承基础类BasicMethodIntecepterImpl，然后调用init方法隐式添加
-        new ExcelFileWriterWriteBodyRowDataIntecepter().init();
+        new TestExcelFileWriterWriteBodyRowDataIntecepter().init();
         //1.准备文件导出处理器--真正的文件导出动作执行者；不同的导出需求，声明不同的处理器。
         TestModelDataExcelExportHandler testModelDataExcelExportHandler=new TestModelDataExcelExportHandler();
         testModelDataExcelExportHandler.init();

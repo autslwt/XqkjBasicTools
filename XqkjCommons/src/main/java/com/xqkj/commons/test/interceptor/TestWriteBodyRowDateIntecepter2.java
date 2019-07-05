@@ -11,23 +11,21 @@ import com.xqkj.commons.model.IntecepterArgsVO;
  * @ Modified By：<br>
  * @Version: 1.000
  */
-public class DefWriteBodyRowDateIntecepter implements ProxyMethodIntecepter {
+public class TestWriteBodyRowDateIntecepter2 implements ProxyMethodIntecepter {
 
     @Override
     public InteceptReturnVO preHandle(IntecepterArgsVO intecepterArgs) {
         //
 //        ExcelFileWriterIntecepterAnnoInfo.WriteBodyRowData param=(ExcelFileWriterIntecepterAnnoInfo.WriteBodyRowData)intecepterArgs.getParamObj();
-//        System.out.println(JSON.toJSONString(param.excelRowInfoVO));
-        System.out.println("DefWriteBodyRowDateIntecepter preHandle");
+//        System.out.println("TestWriteBodyRowDateIntecepter2"+JSON.toJSONString( param.excelRowInfoVO));
         return null;
     }
 
     @Override
     public InteceptReturnVO afterHandle(Object retValue, IntecepterArgsVO intecepterArgs) {
         //
-//        ExcelFileWriterIntecepterAnnoInfo.WriteBodyRowData param=(ExcelFileWriterIntecepterAnnoInfo.WriteBodyRowData)intecepterArgs.getParamObj();
-//        System.out.println(JSON.toJSONString(param.excelWriteExtInfoVO));
-        System.out.println("DefWriteBodyRowDateIntecepter afterHandle");
+       // ExcelFileWriterIntecepterAnnoInfo.WriteBodyRowData param=(ExcelFileWriterIntecepterAnnoInfo.WriteBodyRowData)intecepterArgs.getParamObj();
+        //System.out.println("TestWriteBodyRowDateIntecepter2"+JSON.toJSONString(param.excelWriteExtInfoVO));
         return null;
     }
 }
