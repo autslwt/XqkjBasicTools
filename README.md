@@ -162,6 +162,8 @@ public class TestModelDataExcelExportHandler extends BasicAnnoDataExcelExportHan
 
 导出插件技术文档
 
+![avatar](./excel文件导出插件说明图.png)
+
 导出的过程大致为 生成一个文件或者流--》循环生成数据并写入excel，并将数据刷入文件或者流 --》数据生成完毕，开始上传文件到中央文件服务器
 --》文件上传完成 --》请求下载文件，通过进度监视器使用的持久化工具获取文件下载地址
 
