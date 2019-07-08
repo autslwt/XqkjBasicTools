@@ -12,6 +12,10 @@
 #### 使用说明
 1。简单excel文件导出插件使用说明
 
+概览图
+
+![avatar](./excel文件导出插件说明图.png)
+
 spring工程下推荐使用方法为如下所示
 
 首先定义一个导出服务类
@@ -159,10 +163,72 @@ public class TestModelDataExcelExportHandler extends BasicAnnoDataExcelExportHan
 }
 
 ```
+BasicAnnoDataExcelExportHandler.getPageListMaker返回值的类型声明
+
+```java
+public class TestModel {
+
+    @ExcelCellInforAnno(header = "主键",index = 1)
+    private Integer id;
+    @ExcelCellInforAnno(header = "姓名",index = 2)
+    private String name;
+    @ExcelCellInforAnno(header = "备注",index = 3)
+    private String remarks;
+    @ExcelCellInforAnno(cellCode = "testForCode",header = "code测试",index = 4)
+    private String testForCode;
+    @ExcelCellInforAnno(cellCode = "showForCode",header = "code测试-2",index = 5)
+    private String showForCode;
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public static class RunInforModelExt extends RunInforModel{
+        public int test;
+    }
+
+    public String getTestForCode() {
+        return testForCode;
+    }
+
+    public void setTestForCode(String testForCode) {
+        this.testForCode = testForCode;
+    }
+
+    public String getShowForCode() {
+        return showForCode;
+    }
+
+    public void setShowForCode(String showForCode) {
+        this.showForCode = showForCode;
+    }
+}
+
+```
 
 导出插件技术文档
 
-![avatar](./excel文件导出插件说明图.png)
 
 导出的过程大致为 生成一个文件或者流--》循环生成数据并写入excel，并将数据刷入文件或者流 --》数据生成完毕，开始上传文件到中央文件服务器
 --》文件上传完成 --》请求下载文件，通过进度监视器使用的持久化工具获取文件下载地址
